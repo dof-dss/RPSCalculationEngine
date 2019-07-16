@@ -1,0 +1,12 @@
+﻿{
+  "bindingCulture": {
+    "language": "en-us"
+  },
+  "language": {
+    "feature": "en-us"
+  },
+  "plugins": [],
+  "GatewayRelayUrl": "https://iterativeit-inss-relay.servicebus.windows.net/calculation_engine",
+  "SASKeyName": "RootManageSharedAccessKey",
+  "SASKey": "qMDFiZGxmYl9SBONYbKfY6fZHcJeObQDuNM56hu/+r0="
+}
