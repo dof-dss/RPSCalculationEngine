@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Insolvency.CalculationsEngine.Redundancy.API.IntegrationTests.Common;
-using Cms.RpsCalculations.HttpAggregator.DTOs.Holiday;
+using Insolvency.CalculationsEngine.Redundancy.BL.DTOs.Holiday;
 using TechTalk.SpecFlow;
 
 namespace Insolvency.CalculationsEngine.Redundancy.API.IntegrationTests.Steps

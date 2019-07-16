@@ -1,5 +1,5 @@
 ﻿using Insolvency.CalculationsEngine.Redundancy.API.IntegrationTests.Common;
-using Cms.RpsCalculations.HttpAggregator.DTOs.Apportionment;
+using Insolvency.CalculationsEngine.Redundancy.BL.DTOs.Apportionment;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 

@@ -1,5 +1,5 @@
 ﻿using Insolvency.CalculationsEngine.Redundancy.API.IntegrationTests.Common;
-using Cms.RpsCalculations.HttpAggregator.DTOs.Notice;
+using Insolvency.CalculationsEngine.Redundancy.BL.DTOs.Notice;
 using TechTalk.SpecFlow;
 
 namespace Insolvency.CalculationsEngine.Redundancy.API.IntegrationTests.Steps

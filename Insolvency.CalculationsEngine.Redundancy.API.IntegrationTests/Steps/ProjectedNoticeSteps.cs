@@ -1,5 +1,5 @@
 ﻿using Insolvency.CalculationsEngine.Redundancy.API.IntegrationTests.Common;
-using Cms.RpsCalculations.HttpAggregator.DTOs.ProjectedNoticeDate;
+using Insolvency.CalculationsEngine.Redundancy.BL.DTOs.ProjectedNoticeDate;
 using System;
 using System.Collections.Generic;
 using System.Text;
