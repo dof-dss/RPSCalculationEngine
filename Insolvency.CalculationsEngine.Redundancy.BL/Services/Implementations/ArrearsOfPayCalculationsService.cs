@@ -35,7 +35,7 @@ namespace Insolvency.CalculationsEngine.Redundancy.BL.Services.Implementations
             var statutoryMax = ConfigValueLookupHelper.GetStatutoryMax(options, data.DismissalDate);
 
             var relevantNoticeDate = await data.DateNoticeGiven.GetRelevantNoticeDate(data.DismissalDate);
-            var noticeEntitlementWeeks = await data.EmploymentStartDate.GetNoticeEntitlementWeeks(relevantNoticeDate);    //not adjusted start date      
+            var noticeEntitlementWeeks = await data.EmploymentStartDate.GetNoticeEntitlementWeeks(data.DismissalDate);    //not adjusted start date      
             var projectedNoticeEndDate = await relevantNoticeDate.GetProjectedNoticeDate(noticeEntitlementWeeks);
 
 

@@ -650,7 +650,7 @@ namespace Insolvency.CalculationsEngine.Redundancy.BL.UnitTests.ServicesTests
                     new ArrearsOfPayWeeklyResult(1, new DateTime(2017, 1, 21), 781.25M, 410.57M, 781.25M, 410.57M, true, 82.11M, 29.35M, 299.11M, 6, 5, 410.57M, 781.25M, 410.57M),
                     new ArrearsOfPayWeeklyResult(2, new DateTime(2017, 1, 28), 781.25M, 479M, 0M, 0M, true, 0M, 0M, 0M, 7, 5, 479M, 0M, 0M),
                     new ArrearsOfPayWeeklyResult(3, new DateTime(2017, 2, 4), 781.25M, 479M, 0M, 0M, true, 0M, 0M, 0M, 7, 5, 479M, 0M, 0M),
-                    new ArrearsOfPayWeeklyResult(4, new DateTime(2017, 2, 11), 781.25M, 479M, 781.25M, 479M, true, 95.80M, 37.56M, 345.64M, 7, 5, 479M, 781.25M, 479M),
+                    new ArrearsOfPayWeeklyResult(4, new DateTime(2017, 2, 11), 781.25M, 479M, 0M, 0M, true, 0M, 0M, 0M, 7, 5, 479M, 0M, 0M),
                     new ArrearsOfPayWeeklyResult(5, new DateTime(2017, 2, 18), 781.25M, 479M, 781.25M, 479M, true, 95.80M, 37.56M, 345.64M, 7, 5, 479M, 781.25M, 479M),
                     new ArrearsOfPayWeeklyResult(6, new DateTime(2017, 2, 25), 781.25M, 479M, 781.25M, 479M, true, 95.80M, 37.56M, 345.64M, 7, 5, 479M, 781.25M, 479M),
                     new ArrearsOfPayWeeklyResult(7, new DateTime(2017, 3, 4), 781.25M, 205.29M, 312.50M, 205.29M, true, 41.06M, 4.71M, 159.52M, 3, 2, 205.29M, 312.50M, 205.29M),
@@ -727,8 +727,8 @@ namespace Insolvency.CalculationsEngine.Redundancy.BL.UnitTests.ServicesTests
                     new ArrearsOfPayWeeklyResult(2, new DateTime(2019, 4, 13), 757.58M, 145.14M, 151.52M, 145.14M, true, 29.03M, 0M, 116.11M, 2, 5, 145.14M, 151.52M, 145.14M),
                     new ArrearsOfPayWeeklyResult(3, new DateTime(2019, 4, 20), 757.58M, 508.00M, 0M, 0M, true, 0M, 0M, 0M, 7, 5, 508.00M, 0M, 0M),
                     new ArrearsOfPayWeeklyResult(4, new DateTime(2019, 4, 27), 757.58M, 508.00M, 0M, 0M, true, 0M, 0M, 0M, 7, 5, 508.00M, 0M, 0M),
-                    new ArrearsOfPayWeeklyResult(5, new DateTime(2019, 5, 4), 757.58M, 508.00M, 606.06M, 508.00M, true, 101.60M, 41.04M, 365.36M, 7, 5, 508.00M, 606.06M, 508.00M),
-                    new ArrearsOfPayWeeklyResult(6, new DateTime(2019, 5, 11), 757.58M, 508.00M, 757.58M, 508.00M, true, 101.60M, 41.04M, 365.36M, 7, 5, 508.00M, 757.58M, 508.00M),
+                    new ArrearsOfPayWeeklyResult(5, new DateTime(2019, 5, 4), 757.58M, 508.00M, 0M, 0M, true, 0M, 0M, 0M, 7, 5, 508.00M, 0M, 0M),
+                    new ArrearsOfPayWeeklyResult(6, new DateTime(2019, 5, 11), 757.58M, 508.00M, 606.06M, 508.00M, true, 101.60M, 41.04M, 365.36M, 7, 5, 508.00M, 606.06M, 508.00M),
                     new ArrearsOfPayWeeklyResult(7, new DateTime(2019, 5, 18), 757.58M, 508.00M, 454.55M, 454.55M, true, 90.91M, 34.63M, 329.01M, 7, 3, 508.00M, 454.55M, 454.55M)
                 });
 
