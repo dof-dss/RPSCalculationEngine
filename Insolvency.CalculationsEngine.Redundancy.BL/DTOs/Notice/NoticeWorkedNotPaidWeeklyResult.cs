@@ -6,7 +6,29 @@ namespace Insolvency.CalculationsEngine.Redundancy.BL.DTOs.Notice
     {
         public NoticeWorkedNotPaidWeeklyResult()
         {
-            
+
+        }
+
+        public NoticeWorkedNotPaidWeeklyResult(int weekNumber, DateTime payDate, decimal maximumEntitlement,
+            decimal employerEntitlement, decimal grossEntitlement, bool isTaxable, decimal taxDeducated, decimal niDeducted, decimal netEntitlement, int maxDays, int empDays,
+            decimal maximumEntitlementIn4MonthPeriod, decimal employerEntitlementIn4MonthPeriod, decimal grossEntitlementIn4Months,
+            bool isSelected = false)
+        {
+            WeekNumber = weekNumber;
+            PayDate = payDate;
+            MaximumEntitlement = maximumEntitlement;
+            EmployerEntitlement = employerEntitlement;
+            GrossEntitlement = grossEntitlement;
+            IsTaxable = isTaxable;
+            TaxDeducted = taxDeducated;
+            NiDeducted = niDeducted;
+            NetEntitlement = netEntitlement;
+            MaximumDays = maxDays;
+            EmploymentDays = empDays;
+            MaximumEntitlementIn4MonthPeriod = maximumEntitlementIn4MonthPeriod;
+            EmployerEntitlementIn4MonthPeriod = employerEntitlementIn4MonthPeriod;
+            GrossEntitlementIn4Months = grossEntitlementIn4Months;
+            IsSelected = isSelected;
         }
 
         public int WeekNumber { get; set; }
