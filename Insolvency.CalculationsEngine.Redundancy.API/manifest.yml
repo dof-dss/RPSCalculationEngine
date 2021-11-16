@@ -1,0 +1,8 @@
+﻿---
+applications:
+- name: Insolvency-CalculationsEngine-Redundancy-API
+  buildpacks:
+  - dotnet_core_buildpack
+  memory: 256M
+  services:
+  - insolvency-calculationsEngine-redundancy-mysql

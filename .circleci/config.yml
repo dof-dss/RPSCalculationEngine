@@ -1,0 +1,200 @@
+version: 2.1
+
+orbs:
+  windows: circleci/windows@2.2.0
+  cloudfoundry: circleci/cloudfoundry@0.1.73
+
+commands:
+  install_cmd:
+    parameters:
+      org:
+        type: string
+        default: "dof-dss"
+      space:
+        type: string
+        default: "sandbox"
+    steps:
+      - run:
+          name: "Install and configure Cloud Foundry CLI"
+          command: |
+            Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+            choco install cloudfoundry-cli --version=6.51.0
+            cf -v
+            cf api https://api.london.cloud.service.gov.uk
+            cf auth "$CF_USERNAME" "$CF_PASSWORD"
+            cf target
+            echo "$CF_SPACE" 
+            cf target -o << parameters.org >>  -s << parameters.space >> 
+
+jobs:
+  test:
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - run:
+          name: "Install project dependencies"
+          command: dotnet restore
+      - run:
+          name: "Run Application Tests"
+          command: dotnet test
+  build:
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - run:
+          name: "Build Application"
+          command: dotnet build
+  publish:
+    parameters:
+      manifest:
+        type: string
+      configuration:
+        type: string
+        default: "Release"
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - run:
+          name: "Publish Application"
+          command: dotnet publish -c << parameters.configuration >>
+      - run: 
+          name: "Copy Manifest files to API publish directory"
+          command: |
+            cd Insolvency.CalculationsEngine.Redundancy.API
+            cp << parameters.manifest >> bin/<< parameters.configuration >>/net5.0/publish/manifest.yml
+      - persist_to_workspace:
+          root: .\
+          paths:
+            - Insolvency.CalculationsEngine.Redundancy.API/bin/<< parameters.configuration >>/net5.0/publish
+  hold:
+    executor:
+      name: windows/default
+    steps:
+      - run:
+          name: "Wait for approval"
+          command: echo Wait
+  deploy:
+    parameters:
+      space:
+        type: string
+      configuration:
+        type: string
+        default: "Sandbox"
+    executor:
+      name: windows/default
+    steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp
+      - install_cmd:
+          org: "dof-dss"
+          space: << parameters.space >>
+      - run: 
+          name: "Deploy API to GOV UK PaaS"
+          command: |
+            cd tmp/Insolvency.CalculationsEngine.Redundancy.API/bin/release/net5.0/publish
+            cf push -u process
+  deploy-prod:
+    executor:
+      name: windows/default
+    steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp
+      - install_cmd:
+          org: "dof-dss"
+          space: "production"
+      - run: 
+          name: "Deploy API to GOV UK PaaS"
+          command: |
+            cd tmp/Insolvency.CalculationsEngine.Redundancy.API/bin/Production/net5.0/publish
+            cf push -u process
+workflows:
+  build-and-deploy-sandbox:
+    jobs:
+      - build:
+          filters:
+              branches:
+                only:
+                  - main
+      - publish:
+          manifest: "manifest.yml"
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
+      - deploy:
+          space: "sandbox"
+          requires:
+            - publish
+          context: govuk-paas-sandbox
+  build-and-deploy-staging:
+    jobs:
+      - build:
+          filters:    # selected tags and no branches
+            tags:
+              only: /^v(0|[0-9]\d*)\.(0|[0-9]\d*)\.(0|[0-9]\d*)(?:-(alpha|beta))?$/
+            branches:
+              ignore: /.*/
+      - publish:
+          manifest: "manifest.yml"
+          configuration: "Release"
+          requires:
+            - build
+          filters:    # selected tags and no branches
+            tags:
+              only: /^v(0|[0-9]\d*)\.(0|[0-9]\d*)\.(0|[0-9]\d*)(?:-(alpha|beta))?$/
+            branches:
+              ignore: /.*/
+      - deploy:
+          space: "staging"
+          configuration: "Staging"
+          requires:
+            - publish
+          filters:    # selected tags and no branches
+            tags:
+              only: /^v(0|[0-9]\d*)\.(0|[0-9]\d*)\.(0|[0-9]\d*)(?:-(alpha|beta))?$/
+            branches:
+              ignore: /.*/
+          context: govuk-paas-staging
+  build-and-deploy-production:
+    jobs:
+      - build:
+          filters:    # selected tags and no branches
+            tags:
+              only: /^v(0|[0-9]\d*)\.(0|[0-9]\d*)\.(0|[0-9]\d*)(?:-(alpha|beta))?$/
+            branches:
+              ignore: /.*/
+      - publish:
+          manifest: "manifest.yml"
+          configuration: "Release"
+          requires:
+            - build
+          filters:    # selected tags and no branches
+            tags:
+              only: /^v(0|[0-9]\d*)\.(0|[0-9]\d*)\.(0|[0-9]\d*)(?:-(alpha|beta))?$/
+            branches:
+              ignore: /.*/
+      - hold:
+          type: approval 
+          requires:
+           - publish
+          filters:    # selected tags and no branches
+            tags:
+              only: /^v(0|[0-9]\d*)\.(0|[0-9]\d*)\.(0|[0-9]\d*)(?:-(alpha|beta))?$/
+            branches:
+              ignore: /.*/
+      - deploy-prod:
+          requires:
+            - hold
+          filters:    # selected tags and no branches
+            tags:
+              only: /^v(0|[0-9]\d*)\.(0|[0-9]\d*)\.(0|[0-9]\d*)(?:-(alpha|beta))?$/
+            branches:
+              ignore: /.*/
+          context: govuk-paas-production
