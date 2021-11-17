@@ -114,7 +114,7 @@ jobs:
           command: |
             cd tmp/Insolvency.CalculationsEngine.Redundancy.API/bin/Production/net5.0/publish
             cf push
-            cf set-env Insolvency-CalculationsEngine-Redundancy-API ASPNETCORE_ENVIRONMENT << parameters.configuration >>
+            cf set-env Insolvency-CalculationsEngine-Redundancy-API ASPNETCORE_ENVIRONMENT Production
             cf restage Insolvency-CalculationsEngine-Redundancy-API
 workflows:
   build-and-deploy-sandbox:
