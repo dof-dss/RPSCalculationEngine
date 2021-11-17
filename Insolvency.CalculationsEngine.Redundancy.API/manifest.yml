@@ -5,4 +5,4 @@ applications:
   - dotnet_core_buildpack
   memory: 256M
   services:
-  - insolvency-calculationsEngine-redundancy-mysql
+  - insolvency-calculations-engine-redundancy-mysql
