@@ -96,7 +96,9 @@ jobs:
           name: "Deploy API to GOV UK PaaS"
           command: |
             cd tmp/Insolvency.CalculationsEngine.Redundancy.API/bin/release/net5.0/publish
-            cf push -u process
+            cf push
+            cf set-env Insolvency-CalculationsEngine-Redundancy-API ASPNETCORE_ENVIRONMENT << parameters.configuration >>
+            cf restage Insolvency-CalculationsEngine-Redundancy-API
   deploy-prod:
     executor:
       name: windows/default
@@ -111,7 +113,9 @@ jobs:
           name: "Deploy API to GOV UK PaaS"
           command: |
             cd tmp/Insolvency.CalculationsEngine.Redundancy.API/bin/Production/net5.0/publish
-            cf push -u process
+            cf push
+            cf set-env Insolvency-CalculationsEngine-Redundancy-API ASPNETCORE_ENVIRONMENT << parameters.configuration >>
+            cf restage Insolvency-CalculationsEngine-Redundancy-API
 workflows:
   build-and-deploy-sandbox:
     jobs:
